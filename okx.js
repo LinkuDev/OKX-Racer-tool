@@ -207,10 +207,10 @@ class OKX {
             .split('\n')
             .filter(Boolean);
     
-        const nangcapfueltank = await this.askQuestion('Bạn có muốn nâng cấp fuel tank không? (y/n): ');
-        const hoinangcap = nangcapfueltank.toLowerCase() === 'y';
-        const nangcapturbo = await this.askQuestion('Bạn có muốn nâng cấp Turbo Charger không? (y/n): ');
-        const hoiturbo = nangcapturbo.toLowerCase() === 'y';
+        // const nangcapfueltank = await this.askQuestion('Bạn có muốn nâng cấp fuel tank không? (y/n): ');
+        // const hoinangcap = nangcapfueltank.toLowerCase() === 'y';
+        // const nangcapturbo = await this.askQuestion('Bạn có muốn nâng cấp Turbo Charger không? (y/n): ');
+        // const hoiturbo = nangcapturbo.toLowerCase() === 'y';
 
         while (true) {
             for (let i = 0; i < userData.length; i++) {
@@ -226,42 +226,43 @@ class OKX {
                     let reloadFuelTank = boosts.find(boost => boost.id === 1);
                     let fuelTank = boosts.find(boost => boost.id === 2);
                     let turbo = boosts.find(boost => boost.id === 3);
-                    if (fuelTank && hoinangcap) {
-                        const balanceResponse = await this.postToOKXAPI(extUserId, extUserName, queryId);
-                        const balancePoints = balanceResponse.data.data.balancePoints;
-                        if (fuelTank.curStage < fuelTank.totalStage && balancePoints > fuelTank.pointCost) {
-                            await this.upgradeFuelTank(queryId);
+                    // if (fuelTank && hoinangcap) {
+                    //     const balanceResponse = await this.postToOKXAPI(extUserId, extUserName, queryId);
+                    //     const balancePoints = balanceResponse.data.data.balancePoints;
+                    //     if (fuelTank.curStage < fuelTank.totalStage && balancePoints > fuelTank.pointCost) {
+                    //         await this.upgradeFuelTank(queryId);
                             
-                            boosts = await this.getBoosts(queryId);
-                            const updatedFuelTank = boosts.find(boost => boost.id === 2);
-                            const updatebalanceResponse = await this.postToOKXAPI(extUserId, extUserName, queryId);
-                            const updatedBalancePoints = updatebalanceResponse.data.data.balancePoints;
-                            if (updatedFuelTank.curStage >= fuelTank.totalStage || updatedBalancePoints < fuelTank.pointCost) {
-                                this.log('Không đủ điều kiện nâng cấp Fuel Tank!'.red);
-                                continue;
-                            }
-                        } else {
-                            this.log('Không đủ điều kiện nâng cấp Fuel Tank!'.red);
-                        }
-                    }
-                    if (turbo && hoiturbo) {
-                        const balanceResponse = await this.postToOKXAPI(extUserId, extUserName, queryId);
-                        const balancePoints = balanceResponse.data.data.balancePoints;
-                        if (turbo.curStage < turbo.totalStage && balancePoints > turbo.pointCost) {
-                            await this.upgradeTurbo(queryId);
+                    //         boosts = await this.getBoosts(queryId);
+                    //         const updatedFuelTank = boosts.find(boost => boost.id === 2);
+                    //         const updatebalanceResponse = await this.postToOKXAPI(extUserId, extUserName, queryId);
+                    //         const updatedBalancePoints = updatebalanceResponse.data.data.balancePoints;
+                    //         if (updatedFuelTank.curStage >= fuelTank.totalStage || updatedBalancePoints < fuelTank.pointCost) {
+                    //             this.log('Không đủ điều kiện nâng cấp Fuel Tank!'.red);
+                    //             continue;
+                    //         }
+                    //     } else {
+                    //         this.log('Không đủ điều kiện nâng cấp Fuel Tank!'.red);
+                    //     }
+                    // }
+                    //-------------------------------
+                    // if (turbo && hoiturbo) {
+                    //     const balanceResponse = await this.postToOKXAPI(extUserId, extUserName, queryId);
+                    //     const balancePoints = balanceResponse.data.data.balancePoints;
+                    //     if (turbo.curStage < turbo.totalStage && balancePoints > turbo.pointCost) {
+                    //         await this.upgradeTurbo(queryId);
                             
-                            boosts = await this.getBoosts(queryId);
-                            const updatedTurbo = boosts.find(boost => boost.id === 3);
-                            const updatebalanceResponse = await this.postToOKXAPI(extUserId, extUserName, queryId);
-                            const updatedBalancePoints = updatebalanceResponse.data.data.balancePoints;
-                            if (updatedTurbo.curStage >= turbo.totalStage || updatedBalancePoints < turbo.pointCost) {
-                                this.log('Nâng cấp Turbo Charger không thành công!'.red);
-                                continue;
-                            }
-                        } else {
-                            this.log('Không đủ điều kiện nâng cấp Turbo Charger!'.red);
-                        }
-                    }
+                    //         boosts = await this.getBoosts(queryId);
+                    //         const updatedTurbo = boosts.find(boost => boost.id === 3);
+                    //         const updatebalanceResponse = await this.postToOKXAPI(extUserId, extUserName, queryId);
+                    //         const updatedBalancePoints = updatebalanceResponse.data.data.balancePoints;
+                    //         if (updatedTurbo.curStage >= turbo.totalStage || updatedBalancePoints < turbo.pointCost) {
+                    //             this.log('Nâng cấp Turbo Charger không thành công!'.red);
+                    //             continue;
+                    //         }
+                    //     } else {
+                    //         this.log('Không đủ điều kiện nâng cấp Turbo Charger!'.red);
+                    //     }
+                    // }
 
                     let predict = 1;
                     for (let j = 0; j < 50; j++) {
