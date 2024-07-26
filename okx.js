@@ -262,17 +262,20 @@ class OKX {
                             this.log('Không đủ điều kiện nâng cấp Turbo Charger!'.red);
                         }
                     }
+
+                    let predict = 1;
                     for (let j = 0; j < 50; j++) {
                         const response = await this.postToOKXAPI(extUserId, extUserName, queryId);
                         const balancePoints = response.data.data.balancePoints;
                         this.log(`${'Balance Points:'.green} ${balancePoints}`);
     
-                        const predict = 1;
+                        predict = +!predict;
                         const assessResponse = await this.assessPrediction(extUserId, predict, queryId);
                         const assessData = assessResponse.data.data;
+                        const choosen = predict ? 'tăng'.green : 'giảm'.red
                         const result = assessData.won ? 'Win'.green : 'Thua'.red;
                         const calculatedValue = assessData.basePoint * assessData.multiplier;
-                        this.log(`Kết quả: ${result} x ${assessData.multiplier}! Balance: ${assessData.balancePoints}, Nhận được: ${calculatedValue}, Giá cũ: ${assessData.prevPrice}, Giá hiện tại: ${assessData.currentPrice}`.magenta);
+                        this.log(`Lệnh: ${choosen} ${'Kết quả'.bgCyan} ${result} x ${assessData.multiplier}! Balance: ${assessData.balancePoints}, Nhận được: ${calculatedValue}, Giá cũ: ${assessData.prevPrice}, Giá hiện tại: ${assessData.currentPrice}`.magenta);
     
                         if (assessData.numChance <= 0 && reloadFuelTank && reloadFuelTank.curStage < reloadFuelTank.totalStage) {
                             await this.useBoost(queryId);
@@ -292,7 +295,7 @@ class OKX {
                     this.log(`${'Lỗi rồi:'.red} ${error.message}`);
                 }
             }
-            await this.waitWithCountdown(2);
+            await this.waitWithCountdown(20);
         }
     }    
 }
