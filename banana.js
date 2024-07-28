@@ -353,7 +353,7 @@ class BananaBot {
     }    
 
     async main() {
-        const dataFile = path.join(__dirname, 'banana.txt');
+        const dataFile = path.join(__dirname, 'id.txt');
         const userData = fs.readFileSync(dataFile, 'utf8')
             .replace(/\r/g, '')
             .split('\n')
